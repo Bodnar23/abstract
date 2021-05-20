@@ -1,0 +1,160 @@
+Второй модуль
+
+<div class="conteiner-fluid">              - с начала строки
+122
+</div>
+
+<div class="conteiner">              - с начала сетки
+       122
+</div>
+
+
+
+
+<div class="conteiner">              - с начала строки
+    <div class="row">                      - класс строка
+        <div class="col">1</div>            - колонки
+        <div class="col">2</div>
+        <div class="col">3</div>
+    </div>
+    <div class="row"></div>
+</div>
+
+
+Правила
+1) всегда используйте контейнер если хотим использовать колоночную вёрстку
+2)всегда должна быть строка с классом row 
+3)колонки создаются с помощью класса  col
+4)всегда прописываем правильную структуру
+
+<div class="conteiner">           
+    <div class="row">                     
+        <div class="col">1</div>            
+        <div class="col">2</div>
+        <div class="col">3</div>
+    </div>
+    <div class="row"></div>
+</div>
+
+
+
+Изучаем sass
+
+Как и что мы пишем в документе sass, он автоматически переносит в css + может переносиить в сжатой версии, а может в обычной
+
+Можно использовать в более сокращённом виде
+@mixin ----- =
+@include -----  +
+
+Например :
+
+$text-color: blue   используем переменную, чтобы не повторяться, например везде страл красный шрифт, или стал шрифт определённого размера
+@mixin : box        миксин мы используем чтоб не повторять строчки а применяем с помощью инклуд
+    display: block
+    width: 250px
+    height: 200px
+    background-color: red
+h1
+    color: $text_color
+    font-size: 50px
+    @include box     применяем миксин
+
+h2
+    color: $text-color
+.block 
+    background-color: black
+    h3
+        color: $text_color
+    &_color      заменяет, сокращает строку  (.block_color)
+        background-color: #fff;
+        button
+            @include box
+    .block_color
+         color: $text_color
+
+
+
+
+Вендорные префиксы css
+
+.block {
+    background-color: black; 
+    -webtransitionlit-: 1s all; отвечает за плавность анимации
+    transition: 1s all
+}
+
+префиксы для того чтобы подстраивалось под браузеры, автоматически коопелируется с помощью коалы или sass
+
+
+
+Псевдоклассы и псевдоэлементы
+
+Псевдоклассы - позволяют делать анимацию с помощью css
+Например 
+
+При наведении на кнопку она должна менять цвет
+
+button
+   width: 260px
+   background-color: yellow
+   cursor: pointer
+   transition: 0.5s all        //свойста меняется плавно (анимация)
+   &:hover                        //меняет цвет при наведении на кнопку
+      background-color: pink    //цвет кнопки
+      color: blue          //цвет текста
+   &:active
+      background-color: orange   //конгда нажимаем на элемент он меняет цвет (только при нажатии)
+   &:focus
+      background-color: grey  //выбираем или убираем фокус с элемента, когда нажимаем на кнопку меняет цвет и он остаётся
+
+
+.circle
+   width: 50px
+   height: 50px
+   margin-top: 10px
+   &:nth-child(2n)
+       background-color: red // например покрасить все чётные или наоборот все не чётные
+
+
+Псевдоэлементы - создаём элемент через css, всегда должен быть content
+Например
+
+.circle
+   width: 50px
+   height: 50px
+   margin-top: 10px
+   transition: 0.5s all
+   &:nth-child(2n)
+       background-color: red // например покрасить все чётные или наоборот все не чётные
+   &:before
+      content: ''
+      display: block
+      height: 5px
+      width: 0%
+      background-color: #000
+      transition: 0.5s all
+   &:hover      //когда ннаведём на элемент
+       &:before          //сним произойдёт что появится элемент
+          width: 100%
+     
+Адаптация проэктов под различные устройства
+
+1 Фиксированная вёрстка
+
+<div class='fixed'></div>
+<div class='fixed'></div>
+
+2 Резиновая вёрстка - растягивается и сужается
+
+<div class='rubber'></div>
+<div class='rubber'></div>
+
+3 Адаптивная вёрстка - при определённом уменьшении сужается
+
+<div class='adaptive'></div>
+<div class='adaptive'></div>
+
+4 Отзывчивая вёрстка - резиновая + адаптивная (по сути можно настроить вручную)
+
+<div class='responsive'></div>
+<div class='responsive'></div>
