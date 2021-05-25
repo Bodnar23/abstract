@@ -146,3 +146,17 @@ const ErrorMessage = () => {
         </>
     )
 }
+
+//Жизненый цикл компонента
+
+//Жизненый цикл и хуки
+Компонент появился на странице (componentDidMount())---->  Компонент обновился (new props, или setState) (componentDidUpdate())------>  Компонент был удвлён (componentWillUnmount())
+Либо второй вариант ----- произошла ошибка (componentDidCath())
+
+//Новая команда 
+
+npm run build
+
+//Остановить сервер control + C
+
+//Запускаем на сервер командой http-server + название папки
