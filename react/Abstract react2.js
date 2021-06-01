@@ -160,3 +160,260 @@ npm run build
 //Остановить сервер control + C
 
 //Запускаем на сервер командой http-server + название папки
+
+//Рендер функция - это функция, которая передаёться в компонент для рендеринга части его содержимого. Таким образом мы можем котролировать её извне. Лучше всего её называть renderслово например renderItems.
+
+//Реакт элементы не изменяются, можно только создать копию их методом cloneElement()
+
+//Навигацияв приложении с помощью Реакт Роутинг и библиотека реакт роут
+
+//import {withRouter} from 'react-router-dom';  для того чтоб импортировать из библиотеки способность переходить на страницы
+
+//Свойство default props.
+
+//Работает так же как и параметры по умолчанию в функциях только для свойств компонентов
+
+//js - язык с динамической типизацией и  это значит что когда мы работаем с какими то обьектами и типами данных они могут трасформироватся в другие типы данных во время работы нашей программы и есои не следить за их преобразованиями то можем получить ошибку или некорректную работу
+
+//RandomChar.propTypes проверяет типы данных
+
+// RandomChar.propTypes = {
+//    interval: (props(список всех наших проперти которые приходят в компонент), propName(имя какого-то определённого проперти), componentName(имя самого компонента)) => {
+
+//    }
+// }
+
+//интервал обязательно должен быть числом
+
+//Компоненты высшего порядка (эйчь о си)
+
+//Классы как и функции могут быть безымянными
+
+//Хуки (перехват)- это технология кокторая позволяет перехватить какого то стандартного поведения какого то действия и изменить его.
+
+//1.Используются по желанию
+//2.Обратно совместимы(можно рефакторить код, комбинировать)
+//3.Классовые компоненты не исчезают
+
+//Хуки - это функции которые позволяют нам не создавать классовых компонентов вообще
+
+//Классовые компоненты нужно тогда когда нам нужно классовое состояние компонентов
+
+//Хук юстейт возвращает массив 
+
+//useState - это хук который принимает в себя начальное состояние
+
+import React, {useState} from 'react';
+import './App.css';
+
+function App() { //у этой функции есть состояние
+    const [count, setCount] = useState(0); //начинаем счётчик с нуля и дальше изменять при помощи setState. 
+
+    return (
+        <div>
+            <p>Вы кликнули {count} раз</p>
+            <button
+            onClick={() => setCount(count + 1)}>Кликни меня</button>
+        </div>
+    );
+}
+
+export default App;
+
+//это функциональный компонент но при этом он уже исеет какое то состояние
+
+import React, {useState} from 'react';
+import './App.css';
+
+function App() { 
+    const [count, setCount] = useState(0); 
+    const [data, refreshData] = useState([{name: 'Nastia', sex: 'male'}])
+
+    return (
+        <div>
+            <p>Вы кликнули {count} раз</p>
+            <button
+            onClick={() => setCount(count + 1)}>Кликни меня</button>
+           
+            {data.map(item => {
+                return (
+                    <div>Name: {item].name}, sex: {item.sex}</div>
+                );
+            })}
+            <button 
+            onClick={() => refreshData(data => ([...data, {name: 'Egor', sex: 'male'}]))}>
+            Добавить данные</button>
+        </div>
+
+    );
+}
+
+export default App;
+
+//Хук - useEffect это комбинация компоненнт дид маунт компонент дид апдейт и компонент вил аймаунт или появление либо исчезнавение  компонента с нашей страницы
+
+import React, {useState, useEffect} from 'react'; //useEffect - хук
+import './App.css';
+
+function App() { 
+    const [count, setCount] = useState(0); 
+    const [data, refreshData] = useState([{name: 'Nastia', sex: 'male'}])
+
+    useEffect(() => {
+        updateChar();
+        let timerId = setInterval(updateChar, 15000);
+        return () => {
+            clearInterval(this.timerId);
+        }
+    });
+
+    return (
+        <div>
+            <p>Вы кликнули {count} раз</p>
+            <button
+            onClick={() => setCount(count + 1)}>Кликни меня</button>
+           
+            {data.map(item => {
+                return (
+                    <div>Name: {item].name}, sex: {item.sex}</div>
+                );
+            })}
+            <button 
+            onClick={() => refreshData(data => ([...data, {name: 'Egor', sex: 'male'}]))}>
+            Добавить данные</button>
+        </div>
+
+    );
+}
+
+//Хук useEffect - сообщает реакту что компонент должен что-то сделать после отрисовки , реакт запомнит переданую нами функцию  и вызовит её после того как обновится наш дом.
+
+//useEffect - запускаеться как после первой отрисовки так и после каждого дальнейшего обновления компонента
+
+//Вызываем хуки только из компонента функций
+
+//Вызываем хуки только на верхнем уровне
+
+//Вызываем хук внутри функции
+
+//Хук нельзя поместить во внутрь циклов условий или вложеных функций
+
+//Рефакторим код с помощью хуков
+
+//до
+
+import React, {Component} from 'react';
+import './itemList.css';
+import Spinner from '../spinner/';
+
+
+export default class ItemList extends Component {
+
+    state = {
+        itemList: null
+    }
+
+    componentDidMount() {
+        const {getData} = this.props;
+
+        getData()
+            .then((itemList) => {
+                this.setState({
+                    itemList
+                })
+            })
+    }
+    
+    renderItems(arr) {
+        return arr.map((item) => {
+            const {id, name} = item;
+
+            const label = this.props.renderItem(item);
+
+            return (
+                <li
+                    key={id}
+                    className="list-group-item"
+                    onClick={ () => this.props.onCharSelected(id)}>
+                    {label}
+                </li>
+            )
+        })
+    }
+
+
+    render() {
+        const {itemList} = this.state;
+
+
+        if(!itemList) {
+            return <Spinner/>
+        }
+
+        const items = this.renderItems(itemList);
+
+        return (
+            <ul className="item-list list-group">
+                {items}
+            </ul>
+        );
+    }
+}
+
+//после
+
+import React, {useState, useEffect} from 'react';
+import './itemList.css';
+import Spinner from '../spinner/';
+
+
+
+function ItemList({getData, onItemSelected, renderItem}) {
+
+    const [itemList, updateList] = useState([]);
+
+    useEffect(() => {
+        getData()
+            .then((data) => {
+                updateList(data)
+            })
+    }, [])
+
+    
+    function renderItems(arr) {
+        return arr.map((item) => {
+            const {id, name} = item;
+
+            const label = renderItem(item);
+
+            return (
+                <li
+                    key={id}
+                    className="list-group-item"
+                    onClick={ () => onItemSelected(id)}>
+                    {label}
+                </li>
+            )
+        })
+    }
+
+    if(!itemList) {
+        return <Spinner/>
+    }
+
+    const items = this.renderItems(itemList);
+
+    return (
+        <ul className="item-list list-group">
+            {items}
+        </ul>
+    );
+    
+
+}
+
+ItemList.defaultProps = {
+    onItemSelected: () => {}
+}
+
+export default ItemList;
