@@ -20,10 +20,60 @@
 
 //Испоьзование контекста
 
-import React from 'react';
+// import React from 'react';
 
-const MyContext = React.createContext();
+// const MyContext = React.createContext();
 
-export default MyContext;
+// export default MyContext;
 
 //Всегда должен быть запрос, успех и ошибка!!!!!!!!!!!
+
+//Команда запуска тестов 
+
+// npm run test 
+
+//Как выглядят тесты
+
+// import React from 'react';
+// import RandomChar from './randomChar';
+// import {shallow} from 'enzyme';
+
+// describe('Testing <RandomChar/>', () => {
+//     const char = shallow(<RandomChar/>);
+
+//     describe('Tasting snap & state', () => {
+
+//         it('RandomChar have rendered correctly', () => {
+//             expect(char).toMatchSnapshot();
+//         });
+    
+//         it('RandomChar state "char" is empty object', () => {
+//             expect(char.state().char).toBeObject();
+//         });
+    
+//         it('RandomChar state "loading" is true', () => {
+//             expect(char.state().loading).toBeTruthy();
+//         });
+    
+//         it('RandomChar state "error" is false', () => {
+//             expect(char.state().error).toBeFalsy();
+//         });
+//     });
+//     describe('Handlers tests', () => {
+//         it('testing onCharLoaded', () => {
+//             char.instance().onCharLoaded();
+//             expect(char.state().loading).toBeFalsy();
+//         });
+
+//         it('testing onError', () => {
+//             char.instance().onError();
+//             expect(char.state().loading).toBeFalsy();
+//             expect(char.state().error).toBeTruthy();
+//         });
+
+//         it('testing updateChar', () => {
+//             char.instance().updateChar();
+//             expect(char.state().loading).toBeFalsy();
+//         });
+//     });
+// });
